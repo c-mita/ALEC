@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS=-O1 -I../include -std=c++11
+CFLAGS=-O3 -I../include -std=c++11
 IDIR = ../include
 ODIR = ../obj
 BDIR = ../bin
