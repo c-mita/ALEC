@@ -32,6 +32,14 @@ void LfToCrLf( std::vector< char >* data ) {
 }
 
 void CrLfToLf( std::vector< char >* data ) {
+    std::vector< char > newData;
+    newData.reserve( data->size() );
+    for ( auto it = data->begin(); it != data->end(); ++it ) {
+        if ( *it != asc_CR || ( (it + 1) != data->end() && *(it + 1) != asc_LF ) ) {
+            newData.push_back( *it );
+        }
+    }
+    *data = std::move( newData );
     return;
 }
 
@@ -70,6 +78,7 @@ int main( int argc, char** argv ) {
         ProcessArgs( &args, &conversion, &input, &output );
     } catch ( ... ) {
         std::cout << "Invalid arguments" << std::endl;
+        return 1;
     }
 
     std::vector< char > data;
@@ -98,8 +107,7 @@ int main( int argc, char** argv ) {
 
     try {
         WriteFile( output, &data );
-    }
-    catch (...) {
+    } catch ( ... ) {
         std::cout << "Exception writing file" << std::endl;
         return 1;
     }
